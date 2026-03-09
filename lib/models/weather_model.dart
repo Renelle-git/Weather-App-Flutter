@@ -28,6 +28,7 @@ class WeatherModel {
 
   // factory method to create a weather model from a json object
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
+    // print the json data on weather
     // print('description: ${json['weather'][0]['description']}');
     // print('temp: ${json['main']['temp']}');
     // print('feels_like: ${json['main']['feels_like']}');

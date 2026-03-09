@@ -4,24 +4,30 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app/models/weather_model.dart';
 
 class WeatherApiService {
-  static String get _apiKey => dotenv.env['OPENWEATHER_API_KEY'] ?? '';
-  final String baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
+  static String get _apiKey => dotenv.env['OPENWEATHER_API_KEY']!;
+  final String baseURL = 'https://api.openweathermap.org/data/2.5/weather';
 
-  // fetch weather data from the api
+
+
+  /// Fetch weather by city name.
   Future<WeatherModel?> fetchWeather(String city) async {
-    // print('fetching weather for $city');
     final response = await http.get(
-      Uri.parse(
-        "$baseURL?q=$city&appid=$_apiKey&units=metric",
-      ),
+      Uri.parse("$baseURL?q=$city&appid=$_apiKey&units=metric"),
     );
-
     if (response.statusCode == 200) {
-      // print(response.body);
       return WeatherModel.fromJson(json.decode(response.body));
-    } else {
-      // print('Error: ${response.statusCode}');
-      return null;
     }
+    return null;
+  }
+
+  /// Fetch weather by coordinates (from geolocator).
+  Future<WeatherModel?> fetchWeatherByLocation(double lat, double lon) async {
+    final response = await http.get(
+      Uri.parse("$baseURL?lat=$lat&lon=$lon&appid=$_apiKey&units=metric"),
+    );
+    if (response.statusCode == 200) {
+      return WeatherModel.fromJson(json.decode(response.body));
+    }
+    return null;
   }
 }

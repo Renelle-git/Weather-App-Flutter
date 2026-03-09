@@ -36,13 +36,22 @@ class Weather extends StatelessWidget {
                                 color: AppColors.textPrimary,
                               ),
                               SizedBox(width: 6.0),
-                              Text(
-                                weatherController.weather.value?.city ?? 'N/A',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textPrimary,
+                              Expanded(
+                                child: Text(
+                                  weatherController.weather.value?.city ?? 'N/A',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textPrimary,
+                                  ),
                                 ),
+                              ),
+                              IconButton(
+                                onPressed: weatherController.isLoading.value
+                                    ? null
+                                    : () => weatherController.loadWeather(),
+                                icon: Icon(Icons.my_location_rounded, color: AppColors.textPrimary),
+                                tooltip: 'Use my location',
                               ),
                             ],
                           ),

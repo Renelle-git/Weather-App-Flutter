@@ -1,4 +1,6 @@
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/services/location_service.dart';
 import 'package:weather_app/services/weather_api_services.dart';
 import '../models/weather_model.dart';
 
@@ -10,33 +12,52 @@ class WeatherController extends GetxController {
 
   @override
   void onInit() {
-    // SAMPLE DATA
-    // weather.addAll([
-    //   WeatherModel(
-    //     temperature: 40,
-    //     description: 'Sunny',
-    //     city: 'Manila',
-    //     date: DateTime.now().toString(),
-    //     feelsLike: 25,
-    //     humidity: 50,
-    //     windSpeed: 10,
-    //     pressure: 1000,
-    //     visibility: 100,
-    //     cloudiness: 50,
-    //   ),
-    // ]);
     super.onInit();
-    fetchWeather('La Union'); // Load weather when screen opens
+    // Delay until after first frame so the Activity is ready — permission dialog shows reliably on Android.
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      loadWeather();
+    });
   }
 
-  // fetch weather data from the api
-  void fetchWeather(String city) async {
+  /// Load weather: try device location first (shows permission dialog if needed), fallback to default city.
+  Future<void> loadWeather() async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
 
-      final data = await _apiService.fetchWeather(city);  
+      final position = await determinePosition();
 
+      // print('position: $position');
+      if (position != null) {
+        final data = await _apiService.fetchWeatherByLocation(
+          position.latitude,
+          position.longitude,
+        );
+        if (data != null) {
+          weather.value = data;
+          return;
+        }
+      }
+
+      // final data = await _apiService.fetchWeather('La Union');
+      // if (data != null) {
+      //   weather.value = data;
+      // } else {
+      //   errorMessage.value = 'No weather data found';
+      // }
+    } catch (e) {
+      errorMessage.value = e.toString();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /// Fetch weather for a specific city (e.g. from search).
+  Future<void> fetchWeather(String city) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+      final data = await _apiService.fetchWeather(city);
       if (data != null) {
         weather.value = data;
       } else {

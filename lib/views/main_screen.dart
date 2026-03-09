@@ -26,10 +26,17 @@ class MainScreen extends StatelessWidget {
         );
       }
       if (weatherController.errorMessage.value.isNotEmpty) {
-        return Center(
-          child: Text(weatherController.errorMessage.value),
+        return SafeArea(
+          child: Center(
+            child: AlertDialog(
+              icon: Icon(Icons.error),
+              title: Text('Error'),
+              content: Text(weatherController.errorMessage.value, textAlign: TextAlign.center,),
+            ),
+          ),
         );
-      }
+      }  
+
       return Scaffold(
       body: SafeArea(
         child: Obx(
