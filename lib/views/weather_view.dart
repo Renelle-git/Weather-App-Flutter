@@ -10,6 +10,23 @@ class Weather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherController = Get.find<WeatherController>();
+    final weatherIcon = weatherController.weather.value?.icon;
+    // print('weatherIcon: $weatherIcon');
+    String weatherIconPath = '';
+    if(weatherIcon == 'rain') {
+      weatherIconPath = 'assets/images/heavy-rain.png';
+    } else if(weatherIcon == 'sun') {
+      weatherIconPath = 'assets/images/sun.png';
+    } else if(weatherIcon == 'clouds') {
+      weatherIconPath = 'assets/images/cloudy.png';
+    } else if(weatherIcon == 'snow') {
+      weatherIconPath = 'assets/images/snow.png';
+    } else if(weatherIcon == 'thunderstorm') {
+      weatherIconPath = 'assets/images/thunder.png';
+    }else{
+      weatherIconPath = 'assets/images/sun.png';
+    }
+
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +153,7 @@ class Weather extends StatelessWidget {
                               ),
 
                               // main icon of weather
-                              _WeatherIcon(icon: 'assets/images/sun.png'),
+                              _WeatherIcon(icon: weatherIconPath),
                               SizedBox(width: 1),
                               // Container(
                               //   margin: EdgeInsets.only(right: 10),
@@ -172,8 +189,8 @@ class _WeatherIcon extends StatelessWidget {
       builder: (context, constraints) {
         return Image.asset(
           icon,
-          width: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 180.0),
-          height: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 180.0),
+          width: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 120.0),
+          height: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 120.0),
           fit: BoxFit.cover,
         );
       },

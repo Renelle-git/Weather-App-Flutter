@@ -12,6 +12,7 @@ class WeatherModel {
   final String description; //sunny, cloudy, rainy, etc.
   final String city;
   final String date; //date of the weather
+  final String icon; //icon of the weather
 
   WeatherModel({
     required this.temperature,
@@ -24,6 +25,7 @@ class WeatherModel {
     required this.pressure,
     required this.visibility,
     required this.cloudiness,
+    required this.icon,
   });
 
   // factory method to create a weather model from a json object
@@ -39,6 +41,7 @@ class WeatherModel {
     // print('clouds_all: ${json['clouds']['all']}');
     // print('name: ${json['name']}');
     // print('dt: ${json['dt']}');
+    // print('icon: ${json['weather'][0]['main']}');
     return WeatherModel(
       temperature: double.parse(json['main']['temp'].toString()).roundToDouble(),
       feelsLike: (double.parse(json['main']['feels_like'].toString()) * 10).round() / 10,
@@ -50,6 +53,7 @@ class WeatherModel {
       description: json['weather'][0]['description'].toString().capitalize ?? 'N/A',
       city: json['name'].toString().capitalize ?? 'N/A',  
       date: DateTime.now().toString(),
+      icon: json['weather'][0]['main'].toString().toLowerCase(),
     );
   }
 

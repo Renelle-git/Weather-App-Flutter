@@ -75,23 +75,21 @@ class Details extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Expanded(
-                            child: _DetailsCard(
-                              icon: Icons.thermostat_rounded,
-                              value: '${w?.feelsLike}°C',
-                              label: 'Feels Like',
-                              cardHeight: cardHeight,
-                              padding: padding,
-                              iconSize: iconSize,
-                              valueFontSize: valueFontSize,
-                              labelFontSize: labelFontSize,
-                            ),
+                          child: _DetailsCard(
+                            icon: FontAwesomeIcons.temperatureLow,
+                            value: '${w?.feelsLike}°C',
+                            label: 'Feels Like',
+                            cardHeight: cardHeight,
+                            padding: padding,
+                            iconSize: iconSize,
+                            valueFontSize: valueFontSize,
+                            labelFontSize: labelFontSize,
                           ),
                         ),
                         SizedBox(width: padding),
                         Expanded(
                           child: _DetailsCard(
-                            icon: Icons.air_rounded,
+                            icon: FontAwesomeIcons.wind,
                             value: '${w?.windSpeed} km/h',
                             label: 'Wind Speed',
                             cardHeight: cardHeight,
@@ -104,7 +102,7 @@ class Details extends StatelessWidget {
                         SizedBox(width: padding),
                         Expanded(
                           child: _DetailsCard(
-                            icon: Icons.water_drop_rounded,
+                            icon: FontAwesomeIcons.droplet,
                             value: '${w?.humidity}%',
                             label: 'Humidity',
                             cardHeight: cardHeight,
@@ -120,7 +118,7 @@ class Details extends StatelessWidget {
                       children: [
                         Expanded(
                           child: _DetailsCard(
-                            icon: FontAwesomeIcons.gaugeHigh,
+                            icon: FontAwesomeIcons.gauge,
                             value: '${w?.pressure} hPa',
                             label: 'Pressure',
                             cardHeight: cardHeight,
@@ -146,7 +144,7 @@ class Details extends StatelessWidget {
                         SizedBox(width: padding),
                         Expanded(
                           child: _DetailsCard(
-                            icon: FontAwesomeIcons.cloud,
+                            icon: FontAwesomeIcons.cloudSunRain,
                             value: '${w?.cloudiness}%',
                             label: 'Clouds',
                             cardHeight: cardHeight,
