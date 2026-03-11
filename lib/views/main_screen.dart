@@ -10,10 +10,7 @@ class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   // pages for the IndexedStack
-  List<Widget> get pages => [
-    Weather(),
-    Activities(),
-  ];
+  List<Widget> get pages => [Weather(), Activities()];
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +19,24 @@ class MainScreen extends StatelessWidget {
 
     return Obx(() {
       if (weatherController.isLoading.value) {
-        return const Center(
-          child: Center(
-            child: SafeArea(child: Column(
+        return Center(
+          child: SafeArea(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator( color: AppColors.textPrimary),
-                SizedBox(height: 10),
-                Text('Loading weather data...', style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+                const CircularProgressIndicator(color: AppColors.textPrimary),
+                const SizedBox(height: 10),
+                Text(
+                  'Loading weather data...',
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ],
-            ),
             ),
           ),
         );
@@ -43,46 +45,48 @@ class MainScreen extends StatelessWidget {
         return SafeArea(
           child: Center(
             child: AlertDialog(
-              icon: Icon(Icons.error),
-              title: Text('Error'),
-              content: Text(weatherController.errorMessage.value, textAlign: TextAlign.center,),
+              icon: const Icon(Icons.error),
+              title: const Text('Error'),
+              content: Text(
+                weatherController.errorMessage.value,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         );
-      }  
-
+      }
       return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => IndexedStack(
-            index: navigationController.selectedIndex.value,
-            children: pages,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Obx(
+              () => IndexedStack(
+                index: navigationController.selectedIndex.value,
+                children: pages,
+              ),
+            ),
           ),
         ),
-      ),
-
-      bottomNavigationBar: SafeArea(
-        child: Obx(
-          () => NavigationBar(
-            selectedIndex: navigationController.selectedIndex.value,
-            onDestinationSelected: navigationController.changeIndex,
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.wb_sunny_outlined),
-                selectedIcon: Icon(Icons.wb_sunny),
-                label: 'Weather',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.list_outlined),
-                selectedIcon: Icon(Icons.list),
-                label: 'Activities',
-              ),
-            ],
+        bottomNavigationBar: SafeArea(
+          child: Obx(
+            () => NavigationBar(
+              selectedIndex: navigationController.selectedIndex.value,
+              onDestinationSelected: navigationController.changeIndex,
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.wb_sunny_outlined),
+                  selectedIcon: Icon(Icons.wb_sunny),
+                  label: 'Weather',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.list_outlined),
+                  selectedIcon: Icon(Icons.list),
+                  label: 'Activities',
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
     });
   }
 }
-
