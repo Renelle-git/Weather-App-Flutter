@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:weather_app/constants/app_color.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
+import 'package:weather_app/share/glassmorphism.dart';
 
 class Details extends StatelessWidget {
   Details({super.key});
@@ -61,13 +62,13 @@ class Details extends StatelessWidget {
           SizedBox(height: 20),
           LayoutBuilder(
             builder: (context, constraints) {
-              final width = MediaQuery.sizeOf(context).width;
-              final shortestSide = MediaQuery.sizeOf(context).shortestSide;
-              final cardHeight = shortestSide * 0.25;
-              final padding = (shortestSide * 0.02).clamp(6.0, 14.0);
-              final iconSize = (shortestSide * 0.065).clamp(24.0, 36.0);
-              final valueFontSize = (width * 0.048).clamp(14.0, 22.0);
-              final labelFontSize = (width * 0.032).clamp(11.0, 16.0);
+              final width = MediaQuery.sizeOf(context).width;//
+              final shortestSide = MediaQuery.sizeOf(context).shortestSide; //shortest side of the screen
+              final cardHeight = shortestSide * 0.40; // 40% of the shortest side
+              final padding = (shortestSide * 0.02).clamp(6.0, 14.0); // 2% of the shortest side
+              final iconSize = (shortestSide * 0.065).clamp(24.0, 36.0); // 6.5% of the shortest side
+              final valueFontSize = (width * 0.048).clamp(14.0, 22.0); // 4.8% of the width
+              final labelFontSize = (width * 0.032).clamp(11.0, 16.0); // 3.2% of the width
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: padding),
                 child: Column(
@@ -192,11 +193,11 @@ class _DetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: cardHeight,
-      child: Card(
-        color: AppColors.cardBackground,
-        elevation: 0,
-        child: Padding(
-          padding: EdgeInsets.all(padding),
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: GlassContainer(
+          width: double.infinity,
+          height: cardHeight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
