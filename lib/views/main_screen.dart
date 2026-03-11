@@ -4,6 +4,7 @@ import 'package:weather_app/controllers/navigation_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
 import 'package:weather_app/views/activities_view.dart';
 import 'package:weather_app/views/weather_view.dart';
+import 'package:weather_app/constants/app_color.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -22,7 +23,20 @@ class MainScreen extends StatelessWidget {
     return Obx(() {
       if (weatherController.isLoading.value) {
         return const Center(
-          child: CircularProgressIndicator(),
+          child: Center(
+            child: SafeArea(child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator( color: AppColors.textPrimary),
+                SizedBox(height: 10),
+                Text('Loading weather data...', style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            ),
+          ),
         );
       }
       if (weatherController.errorMessage.value.isNotEmpty) {
