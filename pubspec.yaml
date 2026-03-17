@@ -40,6 +40,7 @@ dependencies:
   get: ^4.6.6 # for dependency injection
   http: ^1.1.0 # for making http requests
   intl: ^0.19.0 # for formatting the date
+  weather_icons: ^3.0.0 # font-based weather icons (offline, scalable)
 
 dev_dependencies:
   flutter_test:

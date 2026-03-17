@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_app/constants/app_color.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
 import 'package:weather_app/views/details_view.dart';
@@ -12,26 +13,26 @@ class Weather extends StatelessWidget {
     final weatherController = Get.find<WeatherController>();
     final weatherIcon = weatherController.weather.value?.icon;
     // print('weatherIcon: $weatherIcon');
-    String weatherIconPath = '';
-    if(weatherIcon == 'rain') {
-      weatherIconPath = 'assets/images/heavy-rain.png';
-    } else if(weatherIcon == 'sun') {
-      weatherIconPath = 'assets/images/sun.png';
-    } else if(weatherIcon == 'clouds') {
-      weatherIconPath = 'assets/images/cloudy.png';
-    } else if(weatherIcon == 'snow') {
-      weatherIconPath = 'assets/images/snow.png';
-    } else if(weatherIcon == 'thunderstorm') {
-      weatherIconPath = 'assets/images/thunder.png';
-    }else{
-      weatherIconPath = 'assets/images/sun.png';
-    }
+    // String weatherIconPath = '';
+    // if(weatherIcon == 'rain') {
+    //   weatherIconPath = 'assets/images/heavy-rain.png';
+    // } else if(weatherIcon == 'sun') {
+    //   weatherIconPath = 'assets/images/sun.png';
+    // } else if(weatherIcon == 'clouds') {
+    //   weatherIconPath = 'assets/images/cloudy.png';
+    // } else if(weatherIcon == 'snow') {
+    //   weatherIconPath = 'assets/images/snow.png';
+    // } else if(weatherIcon == 'thunderstorm') {
+    //   weatherIconPath = 'assets/images/thunder.png';
+    // }else{
+    //   weatherIconPath = 'assets/images/sun.png';
+    // }
 
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Obx((){
+        Obx(() {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -55,7 +56,8 @@ class Weather extends StatelessWidget {
                               SizedBox(width: 6.0),
                               Expanded(
                                 child: Text(
-                                  weatherController.weather.value?.city ?? 'N/A',
+                                  weatherController.weather.value?.city ??
+                                      'N/A',
                                   style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
@@ -63,12 +65,34 @@ class Weather extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              /// Refresh
                               IconButton(
                                 onPressed: weatherController.isLoading.value
                                     ? null
                                     : () => weatherController.loadWeather(),
-                                icon: Icon(Icons.my_location_rounded, color: AppColors.textPrimary),
-                                tooltip: 'Use my location',
+                                icon: Icon(
+                                  Icons.autorenew_rounded,
+                                  color: AppColors.textPrimary,
+                                ),
+                                tooltip: 'Refresh',
+                                style: IconButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: Size.zero,
+                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                ),
+                              ),
+                              /// More settings
+                              IconButton(
+                                onPressed: () => _MoreSettings(),
+                                icon: Icon(
+                                  Icons.more_vert_rounded,
+                                  color: AppColors.textPrimary,
+                                ),
+                                style: IconButton.styleFrom(
+                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  minimumSize: Size.zero,
+                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                ),
                               ),
                             ],
                           ),
@@ -78,7 +102,8 @@ class Weather extends StatelessWidget {
                               Text(
                                 DateFormat('EEEE, MMMM yyyy').format(
                                   DateTime.parse(
-                                    weatherController.weather.value?.date ?? DateTime.now().toString(),
+                                    weatherController.weather.value?.date ??
+                                        DateTime.now().toString(),
                                   ),
                                 ),
                                 textAlign: TextAlign.center,
@@ -104,8 +129,13 @@ class Weather extends StatelessWidget {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: weatherController
-                                              .weather.value?.temperature.toString() ?? 'N/A',
+                                          text:
+                                              weatherController
+                                                  .weather
+                                                  .value
+                                                  ?.temperature
+                                                  .toString() ??
+                                              'N/A',
                                           style: TextStyle(
                                             fontSize: 75,
                                             fontWeight: FontWeight.bold,
@@ -141,7 +171,11 @@ class Weather extends StatelessWidget {
                                   //   ),
                                   // ),
                                   Text(
-                                    weatherController.weather.value?.description ?? 'N/A',
+                                    weatherController
+                                            .weather
+                                            .value
+                                            ?.description ??
+                                        'N/A',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -153,7 +187,7 @@ class Weather extends StatelessWidget {
                               ),
 
                               // main icon of weather
-                              _WeatherIcon(icon: weatherIconPath),
+                              _WeatherIcon(icon: weatherIcon ?? ''),
                               SizedBox(width: 1),
                               // Container(
                               //   margin: EdgeInsets.only(right: 10),
@@ -175,27 +209,49 @@ class Weather extends StatelessWidget {
       ],
     );
   }
-
-  
 }
 
+/// Maps OpenWeatherMap icon codes (e.g. 01d, 10n) to weather_icons.
+const Map<String, IconData> _owmToWeatherIcon = {
+  '01d': WeatherIcons.day_sunny,
+  '01n': WeatherIcons.night_clear,
+  '02d': WeatherIcons.day_cloudy,
+  '02n': WeatherIcons.night_alt_cloudy,
+  '03d': WeatherIcons.day_cloudy_gusts,
+  '03n': WeatherIcons.night_alt_cloudy_gusts,
+  '04d': WeatherIcons.day_sunny_overcast,
+  '04n': WeatherIcons.night_alt_cloudy,
+  '09d': WeatherIcons.day_showers,
+  '09n': WeatherIcons.night_alt_showers,
+  '10d': WeatherIcons.day_rain,
+  '10n': WeatherIcons.night_alt_rain,
+  '11d': WeatherIcons.day_thunderstorm,
+  '11n': WeatherIcons.night_alt_thunderstorm,
+  '13d': WeatherIcons.day_snow,
+  '13n': WeatherIcons.night_alt_snow,
+  '50d': WeatherIcons.day_fog,
+  '50n': WeatherIcons.night_fog,
+};
 
 class _WeatherIcon extends StatelessWidget {
   const _WeatherIcon({required this.icon});
   final String icon;
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Image.asset(
-          icon,
-          width: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 120.0),
-          height: (MediaQuery.of(context).size.shortestSide * 0.38).clamp(70.0, 120.0),
-          fit: BoxFit.cover,
-        );
-      },
+    final size = (MediaQuery.of(context).size.shortestSide * 0.38).clamp(50.0, 110.0);
+    final iconData = _owmToWeatherIcon[icon] ?? WeatherIcons.day_sunny;
+    return BoxedIcon(
+      iconData,
+      size: size,
+      color: AppColors.textPrimary,
     );
   }
 }
 
 
+class _MoreSettings extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

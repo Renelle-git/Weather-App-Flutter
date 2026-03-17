@@ -41,7 +41,7 @@ class WeatherModel {
     // print('clouds_all: ${json['clouds']['all']}');
     // print('name: ${json['name']}');
     // print('dt: ${json['dt']}');
-    // print('icon: ${json['weather'][0]['main']}');
+    // print('icon: ${json['weather'][0]}');
     return WeatherModel(
       temperature: double.parse(json['main']['temp'].toString()).roundToDouble(),
       feelsLike: (double.parse(json['main']['feels_like'].toString()) * 10).round() / 10,
@@ -53,7 +53,8 @@ class WeatherModel {
       description: json['weather'][0]['description'].toString().capitalize ?? 'N/A',
       city: json['name'].toString().capitalize ?? 'N/A',  
       date: DateTime.now().toString(),
-      icon: json['weather'][0]['main'].toString().toLowerCase(),
+      // icon: json['weather'][0]['main'].toString().toLowerCase(),
+      icon: json['weather'][0]['icon'].toString().toLowerCase(),
     );
   }
 

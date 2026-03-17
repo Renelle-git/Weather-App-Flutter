@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controllers/navigation_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
@@ -26,16 +27,16 @@ class MainScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircularProgressIndicator(color: AppColors.textPrimary),
-                const SizedBox(height: 10),
-                Text(
-                  'Loading weather data...',
-                  style: TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                // const SizedBox(height: 10),
+                // Text(
+                //   'Loading weather data...',
+                //   style: TextStyle(
+                //     color: AppColors.textPrimary,
+                //     fontSize: 16,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
               ],
             ),
           ),
@@ -66,6 +67,10 @@ class MainScreen extends StatelessWidget {
             ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: null,
+        //   child: Icon(FontAwesomeIcons.question),
+        //   ),
         bottomNavigationBar: SafeArea(
           child: Obx(
             () => NavigationBar(
