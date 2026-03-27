@@ -86,12 +86,26 @@ class Weather extends StatelessWidget {
                                 onPressed: () => showAboutDialog(
                                   context: context,
                                   applicationName: 'Weather App',
-                                  applicationVersion: 'v1.0.0',
                                   applicationIcon: Image.asset('assets/AppIcon/appIcon.png', width: 50, height: 50, fit: BoxFit.cover),
                                   children:[
                                     Text('A weather app that shows the weather of the current location.'),
 
                                     Text('Developed by: Renelle Q.'),
+
+
+                                    Text('Coordinates:'),
+
+                                    Obx(()=>weatherController.weather.value != null ? Padding(
+                                          padding: const EdgeInsets.only(top: 4),
+                                          child: Text(
+                                            'Longitude: ${weatherController.weather.value!.longitude.toStringAsFixed(4)}°\nLatitude: ${weatherController.weather.value!.latitude.toStringAsFixed(4)}°',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColors.textSecondary,
+                                            ),
+                                          ),
+                                        ) : SizedBox.shrink(),
+                                        )
                                   ],
                                   ),
                                 icon: Icon(
@@ -106,6 +120,7 @@ class Weather extends StatelessWidget {
                               ),
                             ],
                           ),
+                          
                           Row(
                             children: [
                               SizedBox(width: 8),

@@ -10,6 +10,8 @@ class WeatherController extends GetxController {
   final errorMessage = ''.obs;
   final WeatherApiService _apiService = WeatherApiService();
 
+  int _loadGeneration = 0;
+
   @override
   void onInit() {
     super.onInit();
@@ -21,34 +23,39 @@ class WeatherController extends GetxController {
 
   /// Load weather: try device location first (shows permission dialog if needed), fallback to default city.
   Future<void> loadWeather() async {
+    final gen = ++_loadGeneration;
     try {
       isLoading.value = true;
       errorMessage.value = '';
 
       final position = await determinePosition();
 
-      // print('position: $position');
+      if (gen != _loadGeneration) return;
+
       if (position != null) {
         final data = await _apiService.fetchWeatherByLocation(
           position.latitude,
           position.longitude,
         );
+        if (gen != _loadGeneration) return;
         if (data != null) {
           weather.value = data;
           return;
         }
+        errorMessage.value =
+            'Could not load weather for your location.';
+        return;
       }
 
-      // final data = await _apiService.fetchWeather('La Union');
-      // if (data != null) {
-      //   weather.value = data;
-      // } else {
-      //   errorMessage.value = 'No weather data found';
-      // }
+      errorMessage.value = 'Location is unavailable.';
     } catch (e) {
-      errorMessage.value = e.toString();
+      if (gen == _loadGeneration) {
+        errorMessage.value = 'Could not load weather for your location.';
+      }
     } finally {
-      isLoading.value = false;
+      if (gen == _loadGeneration) {
+        isLoading.value = false;
+      }
     }
   }
 

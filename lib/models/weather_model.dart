@@ -11,6 +11,9 @@ class WeatherModel {
   final int cloudiness;
   final String description; //sunny, cloudy, rainy, etc.
   final String city;
+  /// Coordinates returned by OpenWeather for this response (same as request for lat/lon API).
+  final double latitude;
+  final double longitude;
   final String date; //date of the weather
   final String icon; //icon of the weather
 
@@ -18,6 +21,8 @@ class WeatherModel {
     required this.temperature,
     required this.description,
     required this.city,
+    required this.latitude,
+    required this.longitude,
     required this.date,
     required this.feelsLike,
     required this.humidity,
@@ -51,7 +56,9 @@ class WeatherModel {
       visibility: int.parse(json['visibility'].toString()),
       cloudiness: int.parse(json['clouds']['all'].toString()),
       description: json['weather'][0]['description'].toString().capitalize ?? 'N/A',
-      city: json['name'].toString().capitalize ?? 'N/A',  
+      city: json['name'].toString().capitalize ?? 'N/A',
+      latitude: double.parse(json['coord']['lat'].toString()),
+      longitude: double.parse(json['coord']['lon'].toString()),
       date: DateTime.now().toString(),
       // icon: json['weather'][0]['main'].toString().toLowerCase(),
       icon: json['weather'][0]['icon'].toString().toLowerCase(),

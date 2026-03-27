@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:geolocator/geolocator.dart';
 
 /// Determine the current position of the device.
@@ -38,5 +39,21 @@ Future<Position?> determinePosition() async {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-  return await Geolocator.getCurrentPosition();
+  // Use best accuracy + longer timeout so fused/GPS can return a fresh fix
+  // (cached positions often keep showing an old city until a new fix arrives).
+  final LocationSettings settings = !kIsWeb &&
+          defaultTargetPlatform == TargetPlatform.android
+      ? AndroidSettings(
+          accuracy: LocationAccuracy.best,
+          distanceFilter: 0,
+          timeLimit: const Duration(seconds: 60),
+          forceLocationManager: false,
+        )
+      : const LocationSettings(
+          accuracy: LocationAccuracy.best,
+          distanceFilter: 0,
+          timeLimit: Duration(seconds: 60),
+        );
+
+  return Geolocator.getCurrentPosition(locationSettings: settings);
 }

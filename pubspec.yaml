@@ -55,11 +55,13 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 # Replace assets/AppIcon/appIcon.png, then run: dart run flutter_launcher_icons
+# After regenerating: restore adaptive icon inset in mipmap-anydpi-v26/ic_launcher.xml
+# (and copy mipmaps to ic_launcher_round.png per density if you use roundIcon).
 flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/AppIcon/appIcon.png"
-  adaptive_icon_background: "#4A2FCB"
+  adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/AppIcon/appIcon.png"
   remove_alpha_ios: true
 
