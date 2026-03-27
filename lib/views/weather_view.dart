@@ -83,7 +83,17 @@ class Weather extends StatelessWidget {
                               ),
                               /// More settings
                               IconButton(
-                                onPressed: () => _MoreSettings(),
+                                onPressed: () => showAboutDialog(
+                                  context: context,
+                                  applicationName: 'Weather App',
+                                  applicationVersion: 'v1.0.0',
+                                  applicationIcon: Image.asset('assets/AppIcon/appIcon.png', width: 50, height: 50, fit: BoxFit.cover),
+                                  children:[
+                                    Text('A weather app that shows the weather of the current location.'),
+
+                                    Text('Developed by: Renelle Q.'),
+                                  ],
+                                  ),
                                 icon: Icon(
                                   Icons.more_vert_rounded,
                                   color: AppColors.textPrimary,
@@ -248,10 +258,3 @@ class _WeatherIcon extends StatelessWidget {
   }
 }
 
-
-class _MoreSettings extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}

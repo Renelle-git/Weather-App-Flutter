@@ -41,6 +41,7 @@ dependencies:
   http: ^1.1.0 # for making http requests
   intl: ^0.19.0 # for formatting the date
   weather_icons: ^3.0.0 # font-based weather icons (offline, scalable)
+  lottie: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/AppIcon/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
