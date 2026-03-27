@@ -8,6 +8,7 @@ import 'package:weather_app/views/main_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
