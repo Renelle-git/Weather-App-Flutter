@@ -10,15 +10,15 @@ class WeatherApiService {
 
 
   /// Fetch weather by city name.
-  Future<WeatherModel?> fetchWeather(String city) async {
-    final response = await http.get(
-      Uri.parse("$baseURL?q=$city&appid=$_apiKey&units=metric"),
-    );
-    if (response.statusCode == 200) {
-      return WeatherModel.fromJson(json.decode(response.body));
-    }
-    return null;
-  }
+  // Future<WeatherModel?> fetchWeather(String city) async {
+  //   final response = await http.get(
+  //     Uri.parse("$baseURL?q=$city&appid=$_apiKey&units=metric"),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     return WeatherModel.fromJson(json.decode(response.body));
+  //   }
+  //   return null;
+  // }
 
   /// Fetch weather by coordinates (from geolocator).
   Future<WeatherModel?> fetchWeatherByLocation(double lat, double lon) async {

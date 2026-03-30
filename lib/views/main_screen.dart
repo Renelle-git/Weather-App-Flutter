@@ -6,7 +6,8 @@ import 'package:weather_app/controllers/navigation_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
 import 'package:weather_app/views/activities_view.dart';
 import 'package:weather_app/views/weather_view.dart';
-import 'package:weather_app/constants/app_color.dart';
+// import 'package:weather_app/constants/app_color.dart';
+import 'package:lottie/lottie.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -27,7 +28,8 @@ class MainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircularProgressIndicator(color: AppColors.textPrimary),
+                Lottie.asset('assets/lottie/Loading.json', width: 100, height: 100),
+                // const CircularProgressIndicator(color: AppColors.textPrimary),
                 // const SizedBox(height: 10),
                 // Text(
                 //   'Loading weather data...',

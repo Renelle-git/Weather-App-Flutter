@@ -46,7 +46,7 @@ class WeatherModel {
     // print('clouds_all: ${json['clouds']['all']}');
     // print('name: ${json['name']}');
     // print('dt: ${json['dt']}');
-    // print('icon: ${json['weather'][0]}');
+    // debugPrint('JSON DATA: ${json.toString()}');
     return WeatherModel(
       temperature: double.parse(json['main']['temp'].toString()).roundToDouble(),
       feelsLike: (double.parse(json['main']['feels_like'].toString()) * 10).round() / 10,
@@ -60,7 +60,6 @@ class WeatherModel {
       latitude: double.parse(json['coord']['lat'].toString()),
       longitude: double.parse(json['coord']['lon'].toString()),
       date: DateTime.now().toString(),
-      // icon: json['weather'][0]['main'].toString().toLowerCase(),
       icon: json['weather'][0]['icon'].toString().toLowerCase(),
     );
   }

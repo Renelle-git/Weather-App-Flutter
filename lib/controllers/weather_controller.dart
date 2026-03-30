@@ -21,7 +21,7 @@ class WeatherController extends GetxController {
     });
   }
 
-  /// Load weather: try device location first (shows permission dialog if needed), fallback to default city.
+  /// Load weather: try device location first (shows permission dialog if needed)
   Future<void> loadWeather() async {
     final gen = ++_loadGeneration;
     try {
@@ -60,20 +60,20 @@ class WeatherController extends GetxController {
   }
 
   /// Fetch weather for a specific city (e.g. from search).
-  Future<void> fetchWeather(String city) async {
-    try {
-      isLoading.value = true;
-      errorMessage.value = '';
-      final data = await _apiService.fetchWeather(city);
-      if (data != null) {
-        weather.value = data;
-      } else {
-        errorMessage.value = 'No weather data found';
-      }
-    } catch (e) {
-      errorMessage.value = e.toString();
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> fetchWeather(String city) async {
+  //   try {
+  //     isLoading.value = true;
+  //     errorMessage.value = '';
+  //     final data = await _apiService.fetchWeather(city);
+  //     if (data != null) {
+  //       weather.value = data;
+  //     } else {
+  //       errorMessage.value = 'No weather data found';
+  //     }
+  //   } catch (e) {
+  //     errorMessage.value = e.toString();
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 }
