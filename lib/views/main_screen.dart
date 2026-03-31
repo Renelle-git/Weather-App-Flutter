@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/constants/app_color.dart';
 import 'package:weather_app/controllers/navigation_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
 import 'package:weather_app/views/activities_view.dart';
 import 'package:weather_app/views/weather_view.dart';
 // import 'package:weather_app/constants/app_color.dart';
 import 'package:lottie/lottie.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -80,26 +82,37 @@ class MainScreen extends StatelessWidget {
         //   onPressed: null,
         //   child: Icon(FontAwesomeIcons.question),
         //   ),
-        bottomNavigationBar: SafeArea(
-          child: Obx(
-            () => NavigationBar(
-              selectedIndex: navigationController.selectedIndex.value,
-              onDestinationSelected: navigationController.changeIndex,
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(Icons.wb_sunny_outlined),
-                  selectedIcon: Icon(Icons.wb_sunny),
-                  label: 'Weather',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.list_outlined),
-                  selectedIcon: Icon(Icons.list),
-                  label: 'Activities',
-                ),
+        bottomNavigationBar:  Obx(
+            () => CurvedNavigationBar(
+              index: navigationController.selectedIndex.value,
+              color: AppColors.navBarColor,
+              backgroundColor: Colors.transparent,
+              buttonBackgroundColor: AppColors.navBarColor,
+              items: <Widget>[
+                Icon(Icons.wb_sunny_outlined, size: 30, color: AppColors.textPrimary,),
+                Icon(Icons.list_outlined, size: 30, color: AppColors.textPrimary,),
               ],
+              onTap: (index) {
+                navigationController.changeIndex(index);
+              },
             ),
+            // NavigationBar(
+            //   selectedIndex: navigationController.selectedIndex.value,
+            //   onDestinationSelected: navigationController.changeIndex,
+            //   destinations: const [
+            //     NavigationDestination(
+            //       icon: Icon(Icons.wb_sunny_outlined),
+            //       selectedIcon: Icon(Icons.wb_sunny),
+            //       label: 'Weather',
+            //     ),
+            //     NavigationDestination(
+            //       icon: Icon(Icons.list_outlined),
+            //       selectedIcon: Icon(Icons.list),
+            //       label: 'Activities',
+            //     ),
+            //   ],
+            // ),
           ),
-        ),
       );
     });
   }
