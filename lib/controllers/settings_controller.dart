@@ -40,14 +40,14 @@ class SettingsController extends GetxController {
   }
 
   String get themeModeLabel => switch (themeMode) {
-    ThemeMode.light => 'Light',
-    ThemeMode.dark => 'Dark',
-    ThemeMode.system => 'System default',
-  };
+        ThemeMode.light => 'Light',
+        ThemeMode.dark => 'Dark',
+        ThemeMode.system => 'System default',
+      };
 
   Future<void> setUseFahrenheit(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('useFahrenheit', value);
-    useFahrenheit.value = prefs.getBool('useFahrenheit') ?? false;
+     useFahrenheit.value = prefs.getBool('useFahrenheit') ?? false;
   }
 }

@@ -15,6 +15,8 @@ Future<void> main() async {
   final savedThemeIndex = prefs.getInt('themeMode') ?? 0;
   final settings = SettingsController();
   settings.themeModeIndex.value = savedThemeIndex;
+  final savedUseFahrenheit = prefs.getBool('useFahrenheit') ?? false;
+  settings.useFahrenheit.value = savedUseFahrenheit;
   Get.put(settings, permanent: true);
   runApp(const MyApp());
 }
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
 
       builder: (context, child) {
         final brightness = Theme.of(context).brightness;
-        
+
         return Stack(
           children: [
             Container(
