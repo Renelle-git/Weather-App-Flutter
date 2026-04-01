@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_app/constants/app_color.dart';
+import 'package:weather_app/controllers/settings_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
+import 'package:weather_app/utils/temperature_units.dart';
 import 'package:weather_app/views/details_view.dart';
 
 class Weather extends StatelessWidget {
@@ -11,6 +13,7 @@ class Weather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherController = Get.find<WeatherController>();
+    final settingsController = Get.find<SettingsController>();
     final weatherIcon = weatherController.weather.value?.icon;
     // print('weatherIcon: $weatherIcon');
     // String weatherIconPath = '';
@@ -28,11 +31,13 @@ class Weather extends StatelessWidget {
     //   weatherIconPath = 'assets/images/sun.png';
     // }
 
-    return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Obx(() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Obx(() {
+            final useF = settingsController.useFahrenheit.value;
+            final tempC = weatherController.weather.value?.temperature;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -75,49 +80,49 @@ class Weather extends StatelessWidget {
                                   color: AppColors.textPrimary,
                                 ),
                                 tooltip: 'Refresh',
-                                style: IconButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                  minimumSize: Size.zero,
-                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                ),
+                                // style: IconButton.styleFrom(
+                                //   padding: EdgeInsets.zero,
+                                //   minimumSize: Size.zero,
+                                //   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                // ),
                               ),
                               /// More settings
-                              IconButton(
-                                onPressed: () => showAboutDialog(
-                                  context: context,
-                                  applicationName: 'Weather App',
-                                  applicationIcon: Image.asset('assets/AppIcon/appIcon.png', width: 50, height: 50, fit: BoxFit.cover),
-                                  children:[
-                                    Text('A weather app that shows the weather of the current location.'),
+                              // IconButton(
+                              //   onPressed: () => showAboutDialog(
+                              //     context: context,
+                              //     applicationName: 'Weather App',
+                              //     applicationIcon: Image.asset('assets/AppIcon/appIcon.png', width: 50, height: 50, fit: BoxFit.cover),
+                              //     children:[
+                              //       Text('A weather app that shows the weather of the current location.'),
 
-                                    Text('Developed by: Renelle Q.'),
+                              //       Text('Developed by: Renelle Q.'),
 
 
-                                    Text('Coordinates:'),
+                              //       Text('Coordinates:'),
 
-                                    Obx(()=>weatherController.weather.value != null ? Padding(
-                                          padding: const EdgeInsets.only(top: 4),
-                                          child: Text(
-                                            'Longitude: ${weatherController.weather.value!.longitude.toStringAsFixed(4)}°\nLatitude: ${weatherController.weather.value!.latitude.toStringAsFixed(4)}°',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: AppColors.textSecondary,
-                                            ),
-                                          ),
-                                        ) : SizedBox.shrink(),
-                                        )
-                                  ],
-                                  ),
-                                icon: Icon(
-                                  Icons.more_vert_rounded,
-                                  color: AppColors.textPrimary,
-                                ),
-                                style: IconButton.styleFrom(
-                                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                  minimumSize: Size.zero,
-                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                ),
-                              ),
+                              //       Obx(()=>weatherController.weather.value != null ? Padding(
+                              //             padding: const EdgeInsets.only(top: 4),
+                              //             child: Text(
+                              //               'Longitude: ${weatherController.weather.value!.longitude.toStringAsFixed(4)}°\nLatitude: ${weatherController.weather.value!.latitude.toStringAsFixed(4)}°',
+                              //               style: TextStyle(
+                              //                 fontSize: 12,
+                              //                 color: AppColors.textSecondary,
+                              //               ),
+                              //             ),
+                              //           ) : SizedBox.shrink(),
+                              //           )
+                              //     ],
+                              //     ),
+                              //   icon: Icon(
+                              //     Icons.more_vert_rounded,
+                              //     color: AppColors.textPrimary,
+                              //   ),
+                              //   style: IconButton.styleFrom(
+                              //     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              //     minimumSize: Size.zero,
+                              //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              //   ),
+                              // ),
                             ],
                           ),
                           
@@ -154,13 +159,12 @@ class Weather extends StatelessWidget {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text:
-                                              weatherController
-                                                  .weather
-                                                  .value
-                                                  ?.temperature
-                                                  .toString() ??
-                                              'N/A',
+                                          text: tempC != null
+                                              ? TemperatureUnits.formatMain(
+                                                  tempC,
+                                                  useF,
+                                                )
+                                              : 'N/A',
                                           style: TextStyle(
                                             fontSize: 75,
                                             fontWeight: FontWeight.bold,
@@ -173,7 +177,7 @@ class Weather extends StatelessWidget {
                                           child: Transform.translate(
                                             offset: Offset(0, -50),
                                             child: Text(
-                                              '°C',
+                                              TemperatureUnits.suffix(useF),
                                               style: TextStyle(
                                                 fontSize: 35,
                                                 fontWeight: FontWeight.bold,
@@ -231,7 +235,8 @@ class Weather extends StatelessWidget {
             ],
           );
         }),
-      ],
+        ],
+      ),
     );
   }
 }

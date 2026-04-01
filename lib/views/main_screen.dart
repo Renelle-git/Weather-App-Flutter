@@ -10,12 +10,13 @@ import 'package:weather_app/views/weather_view.dart';
 // import 'package:weather_app/constants/app_color.dart';
 import 'package:lottie/lottie.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:weather_app/views/settings_view.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   // pages for the IndexedStack
-  List<Widget> get pages => [Weather(), Activities()];
+  List<Widget> get pages => [Weather(), Activities(), Settings()];
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +70,10 @@ class MainScreen extends StatelessWidget {
       }
       return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Obx(
-              () => IndexedStack(
-                index: navigationController.selectedIndex.value,
-                children: pages,
-              ),
+          child: Obx(
+            () => IndexedStack(
+              index: navigationController.selectedIndex.value,
+              children: pages,
             ),
           ),
         ),
@@ -91,6 +90,7 @@ class MainScreen extends StatelessWidget {
               items: <Widget>[
                 Icon(Icons.wb_sunny_outlined, size: 30, color: AppColors.textPrimary,),
                 Icon(Icons.list_outlined, size: 30, color: AppColors.textPrimary,),
+                Icon(Icons.settings_outlined, size: 30, color: AppColors.textPrimary,),
               ],
               onTap: (index) {
                 navigationController.changeIndex(index);

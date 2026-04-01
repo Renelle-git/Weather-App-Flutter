@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/constants/app_color.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_app/controllers/settings_controller.dart';
 import 'package:weather_app/controllers/weather_controller.dart';
 import 'package:weather_app/share/glassmorphism.dart';
+import 'package:weather_app/utils/temperature_units.dart';
 
 class Details extends StatelessWidget {
   Details({super.key});
@@ -13,6 +15,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final w = weatherController.weather.value;
+      final useF = Get.find<SettingsController>().useFahrenheit.value;
 
       // if(w == null) {
       //   return Center(
@@ -78,7 +81,12 @@ class Details extends StatelessWidget {
                         Expanded(
                           child: _DetailsCard(
                             icon: FontAwesomeIcons.temperatureLow,
-                            value: '${w?.feelsLike}°C',
+                            value: w != null
+                                ? TemperatureUnits.formatDetail(
+                                    w.feelsLike,
+                                    useF,
+                                  )
+                                : '—',
                             label: 'Feels Like',
                             cardHeight: cardHeight,
                             padding: padding,

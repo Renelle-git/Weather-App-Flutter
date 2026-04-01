@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/constants/app_color.dart';
 
 class Activities extends StatelessWidget {
   const Activities({super.key});
@@ -6,20 +7,53 @@ class Activities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: AlertDialog(
-          icon: Icon(Icons.info),
-          title: const Text('Feature Update', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-          content: const SingleChildScrollView(
-            child: Column(
-              children: [
-                Text('Sorry, This feature is not available yet.', textAlign: TextAlign.center,),
-                Text('We are working on it and it will be available soon.', textAlign: TextAlign.center,),
-                Text('Thank you for your understanding.', textAlign: TextAlign.center,),
-              ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            child: Text(
+              'Activities',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
-        ),
+          SizedBox(height: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AlertDialog(
+                icon: Icon(Icons.info),
+                title: const Text(
+                  'Feature Update',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                content: const SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Sorry, This feature is not available yet.',
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'We are working on it and it will be available soon.',
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'Thank you for your understanding.',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
 
