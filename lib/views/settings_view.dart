@@ -153,9 +153,10 @@ class Settings extends StatelessWidget {
   }
 
   void _showThemeSheet(BuildContext context, SettingsController settings) {
+    final brightness = Theme.of(context).brightness;
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: AppColors.navBarColor,
+      backgroundColor: brightness == Brightness.dark ? Colors.black : AppColors.secondary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),

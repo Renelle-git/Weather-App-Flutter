@@ -15,6 +15,8 @@ class GlassContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final brightness = Theme.of(context).brightness;
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
       child: BackdropFilter(
@@ -23,10 +25,12 @@ class GlassContainer extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.15),
+            color: brightness == Brightness.dark
+                ? Colors.white.withValues(alpha: 0.1)
+                : Colors.white.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(25),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.2),
               width: 1.2,
             ),
           ),

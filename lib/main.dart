@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/bindings/initial_binding.dart';
-import 'package:weather_app/constants/app_color.dart';
 import 'package:weather_app/constants/background_color.dart';
 import 'package:weather_app/controllers/settings_controller.dart';
 import 'package:weather_app/views/main_screen.dart';
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
+          seedColor: AppBackground.lightBackground,
           brightness: Brightness.light,
         ),
         scaffoldBackgroundColor: Colors.transparent,
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
 
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
+          seedColor: AppBackground.darkBackground,
           brightness: Brightness.dark,
         ),
         scaffoldBackgroundColor: Colors.transparent,
@@ -55,9 +54,9 @@ class MyApp extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                gradient: brightness == Brightness.dark
-                    ? AppGradients.darkPurpleBlue
-                    : AppGradients.purpleBlue,
+                color: brightness == Brightness.dark
+                    ? AppBackground.darkBackground
+                    : AppBackground.lightBackground,
               ),
             ),
             child!,

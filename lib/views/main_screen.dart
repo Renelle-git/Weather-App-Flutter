@@ -23,6 +23,8 @@ class MainScreen extends StatelessWidget {
     final navigationController = Get.find<NavigationContoller>();
     final weatherController = Get.find<WeatherController>();
 
+    final brightness = Theme.of(context).brightness;
+
     return Obx(() {
       if (weatherController.isLoading.value) {
         return Center(
@@ -84,13 +86,25 @@ class MainScreen extends StatelessWidget {
         bottomNavigationBar:  Obx(
             () => CurvedNavigationBar(
               index: navigationController.selectedIndex.value,
-              color: AppColors.navBarColor,
+              color: brightness == Brightness.dark ? AppColors.navBarColorDark : AppColors.navBarColor,
               backgroundColor: Colors.transparent,
-              buttonBackgroundColor: AppColors.navBarColor,
+              buttonBackgroundColor: brightness == Brightness.dark ? AppColors.navBarColorDark : AppColors.navBarColor,
               items: <Widget>[
-                Icon(Icons.wb_sunny_outlined, size: 30, color: AppColors.textPrimary,),
-                Icon(Icons.list_outlined, size: 30, color: AppColors.textPrimary,),
-                Icon(Icons.settings_outlined, size: 30, color: AppColors.textPrimary,),
+                Icon(
+                  Icons.wb_sunny_outlined,
+                  size: 30,
+                  color: brightness == Brightness.dark ? Colors.white : AppColors.secondary,
+                  ),
+                Icon(
+                  Icons.list_outlined,
+                  size: 30, 
+                  color: brightness == Brightness.dark ? Colors.white : AppColors.secondary,
+                  ),
+                Icon(
+                  Icons.settings_outlined,
+                  size: 30,
+                  color: brightness == Brightness.dark ? Colors.white : AppColors.secondary,
+                  ),
               ],
               onTap: (index) {
                 navigationController.changeIndex(index);
